@@ -5,6 +5,6 @@ namespace pagamento.Models
         public int Id {get;set;}
         public Double Valor {get;set;}
         public string Status {get;set;}
-        
+
     }
 }

@@ -8,6 +8,7 @@ namespace pagamento.Models
         public DateOnly Data { get; set; }
         public Consumidor? Consumidor { get; set; }
         public virtual ICollection<Produto> Produto {get;set;}
+        public int ProdutoId {get;set;}
         public Pagamento Pagamento {get;set;}
     }
 }

@@ -4,6 +4,5 @@ namespace pagamento.Models
     {
         public int Id {get; set;}
         public string Nome {get; set;}
-        public Pedido Pedido {get;set;}
     }
 }

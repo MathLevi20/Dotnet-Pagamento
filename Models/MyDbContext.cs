@@ -10,6 +10,7 @@ namespace pagamento.Models
         }
         public DbSet<Consumidor> Consumidor{get;set;}
         public DbSet<Produto> Produto{get;set;}
+        public DbSet<Pedido> Pedido{get;set;}
         public DbSet<Pagamento> Pagamento{get;set;}
         public DbSet<Boleto> Boleto{get;set;}
         public DbSet<Cartaodecredito> Cartaodecredito{get;set;}
