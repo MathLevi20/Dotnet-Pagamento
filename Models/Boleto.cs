@@ -6,5 +6,6 @@ namespace pagamento.Models
         public string Codigo {get;set;} 
         public Boolean Confirmado {get;set;} 
 
+        
     }
 }
