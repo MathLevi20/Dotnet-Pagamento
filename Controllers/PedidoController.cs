@@ -22,7 +22,8 @@ namespace pagamento.Controllers
         // GET: Pedido
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pedido.ToListAsync());
+            var myDbContext = _context.Pedido.Include(p => p.Consumidor).Include(p => p.Pagamento);
+            return View(await myDbContext.ToListAsync());
         }
 
         // GET: Pedido/Details/5
@@ -34,6 +35,8 @@ namespace pagamento.Controllers
             }
 
             var pedido = await _context.Pedido
+                .Include(p => p.Consumidor)
+                .Include(p => p.Pagamento)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedido == null)
             {
@@ -46,6 +49,8 @@ namespace pagamento.Controllers
         // GET: Pedido/Create
         public IActionResult Create()
         {
+            ViewData["ConsumidorId"] = new SelectList(_context.Consumidor, "Id", "Id");
+            ViewData["PagamentoId"] = new SelectList(_context.Pagamento, "Id", "Discriminator");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace pagamento.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ComDesconto,Desconto,Data,ProdutoId")] Pedido pedido)
+        public async Task<IActionResult> Create([Bind("Id,PagamentoId,DateTime,ConsumidorId")] Pedido pedido)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace pagamento.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ConsumidorId"] = new SelectList(_context.Consumidor, "Id", "Id", pedido.ConsumidorId);
+            ViewData["PagamentoId"] = new SelectList(_context.Pagamento, "Id", "Discriminator", pedido.PagamentoId);
             return View(pedido);
         }
 
@@ -78,6 +85,8 @@ namespace pagamento.Controllers
             {
                 return NotFound();
             }
+            ViewData["ConsumidorId"] = new SelectList(_context.Consumidor, "Id", "Id", pedido.ConsumidorId);
+            ViewData["PagamentoId"] = new SelectList(_context.Pagamento, "Id", "Discriminator", pedido.PagamentoId);
             return View(pedido);
         }
 
@@ -86,7 +95,7 @@ namespace pagamento.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ComDesconto,Desconto,Data,ProdutoId")] Pedido pedido)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PagamentoId,DateTime,ConsumidorId")] Pedido pedido)
         {
             if (id != pedido.Id)
             {
@@ -113,6 +122,8 @@ namespace pagamento.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ConsumidorId"] = new SelectList(_context.Consumidor, "Id", "Id", pedido.ConsumidorId);
+            ViewData["PagamentoId"] = new SelectList(_context.Pagamento, "Id", "Discriminator", pedido.PagamentoId);
             return View(pedido);
         }
 
@@ -125,6 +136,8 @@ namespace pagamento.Controllers
             }
 
             var pedido = await _context.Pedido
+                .Include(p => p.Consumidor)
+                .Include(p => p.Pagamento)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedido == null)
             {

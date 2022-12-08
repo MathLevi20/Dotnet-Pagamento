@@ -12,25 +12,18 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ComDesconto" /> @Html.DisplayNameFor(model => model.ComDesconto)
-                </label>
+            <div class="form-group">
+                <label asp-for="PagamentoId" class="control-label"></label>
+                <select asp-for="PagamentoId" class ="form-control" asp-items="ViewBag.PagamentoId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Desconto" class="control-label"></label>
-                <input asp-for="Desconto" class="form-control" />
-                <span asp-validation-for="Desconto" class="text-danger"></span>
+                <label asp-for="DateTime" class="control-label"></label>
+                <input asp-for="DateTime" class="form-control" />
+                <span asp-validation-for="DateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" />
-                <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProdutoId" class="control-label"></label>
-                <input asp-for="ProdutoId" class="form-control" />
-                <span asp-validation-for="ProdutoId" class="text-danger"></span>
+                <label asp-for="ConsumidorId" class="control-label"></label>
+                <select asp-for="ConsumidorId" class ="form-control" asp-items="ViewBag.ConsumidorId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

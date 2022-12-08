@@ -73,29 +73,21 @@ namespace pagamento.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("ComDesconto")
-                        .HasColumnType("boolean");
-
                     b.Property<int?>("ConsumidorId")
                         .HasColumnType("integer");
 
-                    b.Property<DateOnly>("Data")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<double>("Desconto")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("PagamentoId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProdutoId")
+                    b.Property<int?>("PagamentoId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ConsumidorId");
 
-                    b.HasIndex("PagamentoId");
+                    b.HasIndex("PagamentoId")
+                        .IsUnique();
 
                     b.ToTable("Pedido");
                 });
@@ -165,10 +157,8 @@ namespace pagamento.Migrations
                         .HasForeignKey("ConsumidorId");
 
                     b.HasOne("pagamento.Models.Pagamento", "Pagamento")
-                        .WithMany()
-                        .HasForeignKey("PagamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Pedido")
+                        .HasForeignKey("pagamento.Models.Pedido", "PagamentoId");
 
                     b.Navigation("Consumidor");
 
@@ -178,13 +168,18 @@ namespace pagamento.Migrations
             modelBuilder.Entity("pagamento.Models.Produto", b =>
                 {
                     b.HasOne("pagamento.Models.Pedido", null)
-                        .WithMany("Produto")
+                        .WithMany("items")
                         .HasForeignKey("PedidoId");
+                });
+
+            modelBuilder.Entity("pagamento.Models.Pagamento", b =>
+                {
+                    b.Navigation("Pedido");
                 });
 
             modelBuilder.Entity("pagamento.Models.Pedido", b =>
                 {
-                    b.Navigation("Produto");
+                    b.Navigation("items");
                 });
 #pragma warning restore 612, 618
         }

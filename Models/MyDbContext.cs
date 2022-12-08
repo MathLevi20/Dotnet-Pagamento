@@ -6,7 +6,8 @@ namespace pagamento.Models
     {
         public MyDbContext(DbContextOptions<MyDbContext> options):base(options)
         {
-        
+           AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+          AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
         }
         public DbSet<Consumidor> Consumidor{get;set;}
         public DbSet<Produto> Produto{get;set;}

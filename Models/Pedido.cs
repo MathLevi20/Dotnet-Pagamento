@@ -1,14 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+
 namespace pagamento.Models
 {
     public class Pedido
-    {
+      {
+        [Display(Name = "Código")]
         public int Id { get; set; }
-        public Boolean ComDesconto { get; set; }
-        public Double Desconto { get; set; }
-        public DateOnly Data { get; set; }
-        public Consumidor? Consumidor { get; set; }
-        public virtual ICollection<Produto> Produto {get;set;}
-        public int ProdutoId {get;set;}
-        public Pagamento Pagamento {get;set;}
+        public int? PagamentoId { get; set; }
+        public virtual Pagamento? Pagamento { get; set; }
+
+
+        [Display(Name = "Data_Do_Pedido")]
+        public DateTime DateTime { get; set; }
+
+
+
+
+
+
+        public ICollection<Produto>? items { get; set; }
+
+
+
+        public int? ConsumidorId { get; set; }
+        public virtual Consumidor? Consumidor { get; set; }
     }
 }
